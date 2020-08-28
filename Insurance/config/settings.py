@@ -1,21 +1,24 @@
 import os
+import json
+
+# FOR CONFIGURATIONS
+with open('config.json') as config_file:
+    config = json.load(config_file)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')yq8^1msqp()az#tkks$-yskp$b*l4xcdtcr71_t_t%8#)hy56'
+SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if config['DEBUG'] == "True" else "False"
 
 ALLOWED_HOSTS = ['127.0.0.1']
-PLATFORM_NAME = ''
-
+PLATFORM_NAME = config['PLATFORM_NAME']
 
 LOGGING = {
     'version': 1,
@@ -35,7 +38,6 @@ LOGGING = {
         },
     },
 }
-
 
 # Application definition
 
@@ -87,16 +89,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'insurance',
-        'USER': 'insurance',
-        'PASSWORD': 'insurance#@2020',
+        'NAME': config['DATABASE_NAME'],
+        'USER': config['DATABASE_USER'],
+        'PASSWORD': config['DATABASE_PASSWORD'],
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -122,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -136,7 +136,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -148,12 +147,12 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'dreamhub.tests'
-EMAIL_HOST_PASSWORD = 'testing123dreamhub'
+EMAIL_HOST = config['EMAIL_HOST']
+EMAIL_HOST_USER = config['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'Accounts <dreamhub.tests@gmail.com>'
+DEFAULT_FROM_EMAIL = f"{config['PLATFORM_NAME']}{config['DEFAULT_FROM_EMAIL']}"
 
 LOGIN_URL = 'login'

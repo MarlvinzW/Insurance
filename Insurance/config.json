@@ -1,0 +1,12 @@
+{
+  "SECRET_KEY": ")yq8^1msqp()az#tkks$-yskp$b*l4xcdtcr71_t_t%8#)hy56",
+  "DEBUG": "True",
+  "PLATFORM_NAME": "",
+  "DATABASE_NAME": "insurance",
+  "DATABASE_USER": "insurance",
+  "DATABASE_PASSWORD": "insurance#@2020",
+  "EMAIL_HOST":"smtp.gmail.com",
+  "EMAIL_HOST_USER": "dreamhub.tests@gmail.com",
+  "EMAIL_HOST_PASSWORD":"testing123dreamhub",
+  "DEFAULT_FROM_EMAIL": "Accounts <dreamhub.tests@gmail.com>"
+}

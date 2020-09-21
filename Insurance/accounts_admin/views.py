@@ -56,11 +56,12 @@ class BeneficiariesView(LoginRequiredMixin, View):
     template_name = 'accounts_admin/beneficiaries.html'
     title = f"{settings.PLATFORM_NAME} | Beneficiaries"
 
-    @check_for_permission
+    # @check_for_permission
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'title': self.title})
+        beneficiaries = Beneficiary.objects.all()
+        return render(request, self.template_name, {'title': self.title, 'beneficiaries':beneficiaries })
 
-    @check_for_permission
+    # @check_for_permission
     def post(self, request, *args, **kwargs):
         pass
 

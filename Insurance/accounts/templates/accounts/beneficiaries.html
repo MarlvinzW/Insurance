@@ -9,4 +9,61 @@
 <!--page title-->
 {% block body %}
     {{ title }}
+
+    {% if beneficiaries %}
+    <div class="" style="margin-top: 30px;">
+        <table class="table table-sm table-dark">
+            <thead>
+            <tr>
+                <caption></caption>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Sex</th>
+                <th scope="col">Phone No.</th>
+                <th scope="col">Id No.</th>
+                <th scope="col"></th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+                {% for beneficiary in beneficiaries %}
+            <tr class="">
+                <th scope="row">{{beneficiary.first_name}}</th>
+                <td>{{beneficiary.last_name}}</td>
+                <td>{{beneficiary.date_of_birth}}</td>
+                <td>
+                    {% if beneficiary.sex.lower == Male%}
+                    <i style="color: cyan;" class="fa fa-male" aria-hidden="true"></i>
+                    {% else %}
+                    <i style="color: pink;" class="fa fa-female" aria-hidden="true"></i>
+                    {% endif %}
+                </td>
+                <td>{{beneficiary.phone_number}}</td>
+                <td>{{beneficiary.id_number}}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{% url 'edit_beneficiary' beneficiary.id %}" class="btn btn-sm btn-info">
+                            Edit
+                        </a>
+                        <a href="{% url 'delete_beneficiary' beneficiary.id %}" class="btn btn-sm btn-primary">
+                            Delete
+                        </a>
+
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="container">
+        <p>No Data</p>
+
+    </div>
+    {% endif %}
 {% endblock %}

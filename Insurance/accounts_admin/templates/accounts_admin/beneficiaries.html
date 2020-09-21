@@ -9,4 +9,56 @@
 <!--page title-->
 {% block body %}
     {{ title }}
+
+    <div class="" style="margin-top: 30px;">
+        <table class="table table-sm table-dark">
+            <thead>
+            <tr>
+                <caption>Payments</caption>
+                <th scope="col">id</th>
+                <th scope="col">Reference</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Paid</th>
+                <th scope="col">Email</th>
+                <th scope="col">Status Url</th>
+                <th scope="col">Payment Url</th>
+                <th scope="col"></th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+                {% for beneficiary in beneficiaries %}
+            <tr class="">
+                <th scope="row">{{beneficiary.id}}</th>
+                <td>{{beneficiary.reference}}</td>
+                <td>{{beneficiary.amount}}</td>
+                <td>
+                    {%if has_paid %}
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    {% else %}
+                    <i class="fa fa-calendar-exclamation    "></i>
+                    {% endif %}
+                </td>
+                <td>@{{beneficiary.email}}</td>
+                <td>@{{paymebeneficiarynt.status_url}}</td>
+                <td>@{{beneficiary.payment_url}}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="" class="btn btn-sm btn-info">
+                            Edit
+                        </a>
+                        <a href="" class="btn btn-sm btn-primary">
+                            Delete
+                        </a>
+
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

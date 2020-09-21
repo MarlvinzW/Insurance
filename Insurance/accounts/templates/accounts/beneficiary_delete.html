@@ -1,0 +1,27 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+<!--page title-->
+{% block body %}
+
+<div class="container">
+
+    <form action="{% url 'delete_beneficiary' beneficiary.id %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="beneficiary_id" value="{{beneficiary.id}}">
+
+        <p class="success" style="padding: 40px;padding-left: 0px;">Are you sure you want to delete {{payment.reference}}?</p>
+        
+        
+
+        
+        <div class="btn-group">
+            <button class="btn btn-success" type="submit">Yes</button>
+            <a href="{% url 'beneficiaries' %}" class="btn btn-warning" type="submit">No</a>
+        </div>    
+
+    </form>
+
+</div>
+
+{% endblock %}

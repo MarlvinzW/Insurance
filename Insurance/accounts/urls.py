@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import DashBoardView, PaymentsView, BeneficiariesView, AccountView, ChangePasswordView,delete_payment, \
-edit_payment
+edit_payment, edit_beneficiary, delete_beneficiary
 
 urlpatterns = [
     path('dashboard/', DashBoardView.as_view(), name='dashboard'),
@@ -10,6 +10,8 @@ urlpatterns = [
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     path('delete/payment/<payment_id>/', delete_payment, name='delete_payment'),
     path('edit/payment/<payment_id>/', edit_payment, name='edit_payment'),
+    path('delete/beneficiary/<beneficiary_id>/', delete_beneficiary, name='delete_beneficiary'),
+    path('edit/beneficiary/<beneficiary_id>/', edit_beneficiary, name='edit_beneficiary'),
 
 
 ]

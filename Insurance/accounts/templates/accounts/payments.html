@@ -9,4 +9,57 @@
 <!--page title-->
 {% block body %}
     {{ title }}
+    
+    <div class="" style="margin-top: 30px;">
+        <table class="table table-sm table-dark">
+            <thead>
+            <tr>
+                <caption>Payments</caption>
+                <th scope="col">id</th>
+                <th scope="col">Reference</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Paid</th>
+                <th scope="col">Email</th>
+                <th scope="col">Status Url</th>
+                <th scope="col">Payment Url</th>
+                <th scope="col"></th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+            <tr class="">
+                <th scope="row">{{payment.id}}</th>
+                <td>{{payment.reference}}</td>
+                <td>{{payment.amount}}</td>
+                <td>
+                    {%if payment.has_paid %}
+                    <i style="color: green;" class="fa fa-check" aria-hidden="true"></i>
+                    {% else %}
+                    <i style="color: crimson;" class="fa fa-crosshairs" aria-hidden="true"></i>
+                    {% endif %}
+                </td>
+                <td>@{{payment.email}}</td>
+                <td>@{{payment.status_url}}</td>
+                <td>@{{payment.payment_url}}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{% url 'edit_payment' payment.id %}" class="btn btn-sm btn-info">
+                            Edit
+                        </a>
+                        <a href="{% url 'delete_payment' payment.id %}" class="btn btn-sm btn-primary">
+                            Delete
+                        </a>
+
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    
 {% endblock %}

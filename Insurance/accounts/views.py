@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from accounts.decorators import check_for_permission
 from accounts.forms import UserUpdateForm, PasswordChange
 from payments.models import *
+from beneficiaries.models import *
 
 user = get_user_model()
 
@@ -44,7 +45,8 @@ class PaymentsView(LoginRequiredMixin, View):
 
     # @check_for_permission
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'title': self.title})
+        payments = Payment.objects.all()
+        return render(request, self.template_name, {'title': self.title, 'payments': payments})
 
     def get_queryset(self, *args, **kwargs): 
         qs = super(Payment, self).get_queryset(*args, **kwargs) 
@@ -65,11 +67,12 @@ class BeneficiariesView(LoginRequiredMixin, View):
     template_name = 'accounts/beneficiaries.html'
     title = f"{settings.PLATFORM_NAME} | Beneficiaries"
 
-    @check_for_permission
+    # @check_for_permission
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'title': self.title})
+        beneficiaries = Beneficiary.objects.all()
+        return render(request, self.template_name, {'title': self.title,'beneficiaries':beneficiaries })
 
-    @check_for_permission
+    # @check_for_permission
     def post(self, request, *args, **kwargs):
         pass
 
@@ -193,3 +196,52 @@ def edit_payment(request, payment_id):
         
 
     return render(request, 'accounts/payment_edit.html', context=context)    
+
+
+def delete_beneficiary(request, beneficiary_id):
+    beneficiary = Beneficiary.objects.filter(id=beneficiary_id).first() 
+
+    context = {
+        'beneficiary': beneficiary
+    }
+
+    if request.method == "POST":
+        beneficiary = Beneficiary.objects.filter(id=int(request.POST['beneficiary_id'])).first()
+        beneficiary.delete()
+        messages.success(request, 'Successfully Deleted Beneficiary')
+        return redirect('beneficiaries')
+        
+        
+
+    return render(request, 'accounts/beneficiary_delete.html', context=context)
+
+def edit_beneficiary(request, beneficiary_id):
+    beneficiary = Beneficiary.objects.filter(id=beneficiary_id).first() 
+
+    context = {
+        'beneficiary': beneficiary
+    }
+
+    if request.method == "POST":
+        
+        beneficiary = Beneficiary.objects.filter(id=int(request.POST['beneficiary_id']))
+
+
+        beneficiary.update(
+            first_name = request.POST['first_name'],
+            last_name=request.POST['last_name'],
+            date_of_birth = request.POST['date_of_birth'],
+            sex = request.POST['sex'],
+            phone_number = request.POST['phone_number'],
+            id_number = request.POST['id_number'],
+        )
+
+
+        
+        messages.success(request, 'Successfully Updated Beneficiary')
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found')) 
+
+        
+        
+
+    return render(request, 'accounts/beneficiary_edit.html', context=context)    

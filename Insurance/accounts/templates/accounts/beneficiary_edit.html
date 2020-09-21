@@ -1,0 +1,93 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+<!--page title-->
+{% block body %}
+
+<div class="container">
+
+    <form action="{% url 'edit_beneficiary' beneficiary.id %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="beneficiary_id" value="{{beneficiary.id}}">
+
+        <p class="success" style="padding: 40px;padding-left: 0px;">Edit Beneficiary {{beneficiary.first_name}} {{beneficiary.last_name}}?</p>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">First Name</label>
+                <input type="text" class="form-control" name="first_name" aria-describedby="emailHelp" placeholder="Enter First Name"
+                value="{{beneficiary.first_name}}">
+                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+
+            <div class="form-group col-md-6">
+            <label for="exampleInputEmail1">Last Name</label>
+            <input type="text" class="form-control" name="last_name" aria-describedby="emailHelp" placeholder="Enter email"
+            value="{{beneficiary.first_name}}">
+            <!-- <small id="emailHelp" class="form-text text-muted">Reference for payment.</small> -->
+            </div>
+
+        </div>
+
+        <div class="row">
+            
+
+            <div class="form-group col-md-6">
+            <label for="exampleInputEmail1">DOB</label>
+            <input type="date" class="form-control" name="date_of_birth" id="dob" aria-describedby="emailHelp" placeholder="Enter DOB"
+            value="{{payment.date_of_birth}}">
+            <!-- <small id="emailHelp" class="form-text text-muted">Amount for payment.</small> -->
+            </div>
+
+            <div class="form-group col-md-6">
+                <div class="form-group">
+                    <label for="sel1">Sex: </label>
+                    <select class="form-control" name="sex">
+
+                      <option {% if beneficiary.sex == 'Male'%} selected="selected" {% endif %} value="Male">Male</option>
+                      <option {% if beneficiary.sex == 'Female'%} selected="selected" {% endif %} value="Female">Female</option>
+                      
+                    </select>
+                  </div>
+            </div>      
+
+                
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">Phone No</label>
+                <input type="text" class="form-control"  name="phone_number" aria-describedby="emailHelp" placeholder="Enter email"
+                value="{{beneficiary.phone_number}}">
+            </div>
+
+            <div class="form-group col-md-6">
+            <label for="exampleInputEmail1">Id No</label>
+            <input type="text" class="form-control" name="id_number" aria-describedby="emailHelp" placeholder="Enter email"
+            value="{{beneficiary.id_number}}">
+            </div>
+
+        </div>
+          
+        
+        
+
+        
+        <div class="btn-group">
+            <button class="btn btn-success" type="submit">Submit</button>
+            <a href="{% url 'accounts' %}" class="btn btn-default" type="submit">Cancel</a>
+        </div>    
+
+    </form>
+
+</div>
+
+<script>
+    var date = "{{beneficiary.date_of_birth|date:'Y-m-d'}}";
+    document.getElementById("dob").defaultValue = "date";
+    alert(date);
+
+</script>
+
+{% endblock %}

@@ -76,7 +76,9 @@ class Payment(models.Model):
     time = models.TimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.reference + ' - $' + str(self.amount) + ' ' + str(self.payee.username)
+        # return self.reference + ' - $' + str(self.amount) + ' ' + str(self.payee.username)
+        return self.reference
+
 
     class Meta:
         verbose_name_plural = 'Payments'

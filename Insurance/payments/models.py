@@ -66,6 +66,7 @@ class PaynowConfig(models.Model):
 
 class Payment(models.Model):
     reference = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(max_length=70,blank=True,unique=True)
     payee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='beneficiary_payment')
     amount = models.FloatField()
     has_paid = models.BooleanField(default=False)

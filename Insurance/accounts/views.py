@@ -8,6 +8,7 @@ from django.views.generic import FormView
 
 from accounts.decorators import check_for_permission
 from accounts.forms import UserUpdateForm, PasswordChange
+from payments.models import *
 
 user = get_user_model()
 
@@ -38,11 +39,18 @@ class PaymentsView(LoginRequiredMixin, View):
     template_name = 'accounts/payments.html'
     title = f"{settings.PLATFORM_NAME} | Payments"
 
-    @check_for_permission
+    model = Payment
+
+    # @check_for_permission
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, {'title': self.title})
 
-    @check_for_permission
+    def get_queryset(self, *args, **kwargs): 
+        qs = super(Payment, self).get_queryset(*args, **kwargs) 
+        qs = qs.order_by("-id") 
+        return qs 
+
+    # @check_for_permission
     def post(self, request, *args, **kwargs):
         pass
 
@@ -74,13 +82,13 @@ class AccountView(LoginRequiredMixin, FormView):
     title = f"{settings.PLATFORM_NAME} | Account"
     template_name = 'accounts/accounts.html'
 
-    @check_for_permission
+    # @check_for_permission
     def get_context_data(self, **kwargs):
         context = super(AccountView, self).get_context_data(**kwargs)
         context['title'] = self.title
         return context
 
-    @check_for_permission
+    # @check_for_permission
     def get(self, request, *args, **kwargs):
         user_update_form = UserUpdateForm(instance=request.user)
         return render(request, self.template_name, {'user_update_form': user_update_form})
@@ -134,3 +142,21 @@ class ChangePasswordView(LoginRequiredMixin, FormView):
         else:
             messages.warning(request, 'Wrong Old Password, Please Try Again')
             return redirect('change-password')
+
+
+def delete_payment(request, payment_id):
+    payment = Payment.objects.filter(id=payment_id).first() 
+
+    context = {
+        'payment': payment
+    }
+
+    if request.method == "POST":
+        payment = Payment.objects.filter(id=int(request.POST['payment_id'])).first()
+        payment.delete()
+        messages.success(request, 'Successfully Deleted Payment')
+        return redirect('accounts')
+        
+        
+
+    return render(request, 'accounts/payment_delete.html', context=context)

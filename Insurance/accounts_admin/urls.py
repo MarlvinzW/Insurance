@@ -8,3 +8,7 @@ urlpatterns = [
     path('accounts/', AccountView.as_view(), name='accounts'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
 ]
+
+
+app_name = 'accounts_admin'
+

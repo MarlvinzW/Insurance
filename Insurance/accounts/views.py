@@ -7,6 +7,7 @@ from django.conf import settings
 from django.views.generic import FormView
 
 from accounts.decorators import check_for_permission
+from accounts.forms import UserUpdateForm, PasswordChange
 
 user = get_user_model()
 

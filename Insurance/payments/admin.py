@@ -9,13 +9,13 @@ from .models import AccountBalance, CheckOut, PaynowConfig, Payment
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('reference', 'name', 'amount', 'has_paid')
+    list_display = ('reference', 'payee', 'amount', 'has_paid')
     list_per_page = 50
-    search_fields = ('reference', 'name', 'email')
+    search_fields = ('reference', 'payee', 'email')
     list_filter = ('has_paid', 'date', 'time')
     fieldsets = (
         ('Client Details',
-         {'fields': ('name', 'email')
+         {'fields': ('payee', 'email')
           }),
         ('Payment Details',
          {'fields': ('reference', 'amount', 'has_paid', 'payment_url', 'status_url')

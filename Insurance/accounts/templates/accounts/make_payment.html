@@ -1,0 +1,76 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+<!--page title-->
+{% block body %}
+
+<div class="container">
+
+    <form action="{% url 'make_payment' %}" method="POST">
+        {% csrf_token %}
+        
+
+        <p class="success" style="padding: 40px;padding-left: 0px;">Make Payment </p>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+
+            <div class="form-group col-md-6">
+            <label for="exampleInputEmail1">Reference</label>
+            <input type="text" class="form-control" name="reference" aria-describedby="emailHelp" placeholder="Reference">
+            <small id="emailHelp" class="form-text text-muted">Reference for payment.</small>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group  col-md-6">
+                
+                <input type="checkbox" name='has_paid' class="form-check-input">
+                <label class="form-check-label" for="defaultCheck1">
+                    Has Paid
+                  </label>
+                <small id="emailHelp" class="form-text text-muted">Payment Confirmation.</small>
+            </div>
+
+            <div class="form-group col-md-6">
+            <label for="exampleInputEmail1">Amount</label>
+            <input type="number" class="form-control" name="amount" aria-describedby="emailHelp" placeholder="Amount">
+            <small id="emailHelp" class="form-text text-muted">Amount for payment.</small>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">Payment Url</label>
+                <input type="url" class="form-control"  name="payment_url" aria-describedby="emailHelp" placeholder="Enter Payment Url">
+                <small id="emailHelp" class="form-text text-muted">Payment Url.</small>
+            </div>
+
+            <div class="form-group col-md-6">
+            <label for="exampleInputEmail1">Status Url</label>
+            <input type="url" class="form-control" name="status_url" aria-describedby="emailHelp" placeholder="Enter Status Url">
+            <small id="emailHelp" class="form-text text-muted">Status Url.</small>
+            </div>
+
+        </div>
+          
+        
+        
+
+        
+        <div class="btn-group">
+            <button class="btn btn-success" type="submit">Submit</button>
+            <a href="{% url 'payments' %}" class="btn btn-default" type="submit">Cancel</a>
+        </div>    
+
+    </form>
+
+</div>
+
+{% endblock %}

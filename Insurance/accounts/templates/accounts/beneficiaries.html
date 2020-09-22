@@ -12,7 +12,7 @@
 
     {% if beneficiaries %}
     <div class="" style="margin-top: 30px;">
-        <table class="table table-sm table-dark">
+        <table class="table table-sm">
             <thead>
             <tr>
                 <caption></caption>
@@ -35,7 +35,7 @@
                 <td>{{beneficiary.last_name}}</td>
                 <td>{{beneficiary.date_of_birth}}</td>
                 <td>
-                    {% if beneficiary.sex.lower == Male%}
+                    {% if beneficiary.sex.lower == "male"%}
                     <i style="color: cyan;" class="fa fa-male" aria-hidden="true"></i>
                     {% else %}
                     <i style="color: pink;" class="fa fa-female" aria-hidden="true"></i>

@@ -235,6 +235,8 @@ def edit_beneficiary(request, beneficiary_id):
             phone_number = request.POST['phone_number'],
             id_number = request.POST['id_number'],
         )
+        
+
 
 
         
@@ -245,3 +247,45 @@ def edit_beneficiary(request, beneficiary_id):
         
 
     return render(request, 'accounts/beneficiary_edit.html', context=context)    
+
+
+def create_beneficiary(request):
+
+
+    if request.method == "POST":
+        beneficiary = Beneficiary.objects.create (
+            guardian = request.user,
+            first_name = request.POST['first_name'],
+            last_name=request.POST['last_name'],
+            date_of_birth = request.POST['date_of_birth'],
+            sex = request.POST['sex'],
+            phone_number = request.POST['phone_number'],
+            id_number = request.POST['id_number'],
+        )
+        messages.success(request, f"Successfully Created Beneficiary {beneficiary.first_name.title()} {beneficiary.last_name.title()}")
+        return redirect('beneficiaries')
+
+
+    return render(request, 'accounts/beneficiary_create.html')    
+
+
+def make_payment(request):
+
+    if request.method == "POST":
+        is_paid = False
+
+        if request.POST['has_paid'] == 'on': is_paid = True
+
+        payment = Payment.objects.create(
+            payee = request.user,
+            email = request.POST['email'],
+            reference = request.POST['reference'],
+            amount = request.POST['amount'],
+            status_url = request.POST['status_url'],
+            payment_url = request.POST['payment_url'],
+            has_paid = is_paid
+        )
+        messages.success(request, f"Successfully Made Payment {payment.reference} ")
+        return redirect('payments')
+
+    return render(request, 'accounts/make_payment.html')  
